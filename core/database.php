@@ -22,7 +22,7 @@ class Database
                 PDO::ATTR_ERRMODE,
                 PDO::ERRMODE_EXCEPTION
             );
-            echo "Database verbonden!";
+            echo "";
         } catch (PDOException $e) {
             die("Connectie mislukt: " . $e->getMessage());
         }
