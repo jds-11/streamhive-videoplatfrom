@@ -23,6 +23,14 @@ class UserModel
         )->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getByEmail(string $email)
+    {
+        return $this->db->query(
+            "SELECT * FROM users WHERE email = :email",
+            [':email' => $email]
+        )->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function insert(string $email, string $password, string $role = 'user')
     {
         return $this->db->query(

@@ -8,9 +8,6 @@ $userModel = new UserModel();
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    var_dump($_POST);
-    exit;
-
     $email    = $_POST['email'];
     $password = $_POST['password'];
 
