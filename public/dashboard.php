@@ -11,9 +11,9 @@ requireLogin();
 $userModel  = new UserModel();
 $videoModel = new VideoModel();
 $currentUser = $userModel->getById($_SESSION['user_id']);
-$users       = $userModel->getAll();
-$videos      = $videoModel->getAll();
+$videos      = $videoModel->getAllWithUser();
 ?>
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -23,16 +23,15 @@ $videos      = $videoModel->getAll();
 <body>
     <h1>Welkom <?= $currentUser['email'] ?>!</h1>
     <p>Rol: <?= $currentUser['role'] ?></p>
+    <a href="upload.php"><button>Video uploaden</button></a>
     <a href="logout.php">Uitloggen</a>
-    <h2>Users</h2>
-    <?php foreach ($users as $user): ?>
-        <p><?= $user['email'] ?> — <?= $user['role'] ?></p>
-    <?php endforeach; ?>
+
     <h2>Videos</h2>
     <?php foreach ($videos as $video): ?>
         <div>
-            <h3><?= $video['title'] ?></h3>
+            <h3><a href="video.php?id=<?= $video['id'] ?>"><?= $video['title'] ?></a></h3>
             <p><?= $video['description'] ?></p>
+            <p>Geüpload door: <?= $video['uploader'] ?></p>
         </div>
     <?php endforeach; ?>
 </body>
