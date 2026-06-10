@@ -26,12 +26,18 @@ $videos      = $videoModel->getAllWithUser();
     <a href="upload.php"><button>Video uploaden</button></a>
     <a href="logout.php">Uitloggen</a>
 
+    <form method="GET" action="search.php">
+        <input type="text" name="q" placeholder="Zoek een video...">
+        <button type="submit">Zoeken</button>
+    </form>
+
     <h2>Videos</h2>
     <?php foreach ($videos as $video): ?>
         <div>
             <h3><a href="video.php?id=<?= $video['id'] ?>"><?= $video['title'] ?></a></h3>
             <p><?= $video['description'] ?></p>
             <p>Geüpload door: <?= $video['uploader'] ?></p>
+            <p>Views: <?= $video['views'] ?></p>
         </div>
     <?php endforeach; ?>
 </body>

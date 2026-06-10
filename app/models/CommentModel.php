@@ -23,7 +23,7 @@ class CommentModel
     public function insert(int $videoId, int $userId, string $comment)
     {
         return $this->db->query(
-            "INSERT INTO comments (video_id, user_id, comment) VALUES (:video_id, :user_id, :comment)",
+            "INSERT INTO comments (video_id, user_id, content) VALUES (:video_id, :user_id, :comment)",
             [
                 ':video_id' => $videoId,
                 ':user_id'  => $userId,

@@ -9,28 +9,32 @@ require_once __DIR__ . '/../app/models/LikeModel.php';
 
 requireLogin();
 
+$videoId = (int)$_GET['id'];
+$userId  = $_SESSION['user_id'];
+
 $videoModel   = new VideoModel();
 $commentModel = new CommentModel();
 $likeModel    = new LikeModel();
 
-$videoId = (int)$_GET['id'];
-$userId  = $_SESSION['user_id'];
-$video   = $videoModel->getById($videoId);
+// View teller verhogen
+$videoModel->incrementViews($videoId);
 
-// Like of unlike verwerken
+$video = $videoModel->getById($videoId);
+
+// Comment opslaan
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'])) {
+    $commentModel->insert($videoId, $userId, $_POST['comment']);
+    header('Location: video.php?id=' . $videoId);
+    exit;
+}
+
+// Like of unlike
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['like'])) {
     if ($likeModel->hasLiked($videoId, $userId)) {
         $likeModel->delete($videoId, $userId);
     } else {
         $likeModel->insert($videoId, $userId);
     }
-    header('Location: video.php?id=' . $videoId);
-    exit;
-}
-
-// Comment verwerken
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'])) {
-    $commentModel->insert($videoId, $userId, $_POST['comment']);
     header('Location: video.php?id=' . $videoId);
     exit;
 }
@@ -49,6 +53,7 @@ $hasLiked  = $likeModel->hasLiked($videoId, $userId);
 <body>
     <h1><?= $video['title'] ?></h1>
     <p><?= $video['description'] ?></p>
+    <p>Views: <?= $video['views'] ?></p>
 
     <video width="640" controls>
         <source src="../../uploads/<?= $video['filename'] ?>" type="video/mp4">
@@ -56,17 +61,15 @@ $hasLiked  = $likeModel->hasLiked($videoId, $userId);
 
     <br>
 
-    <!-- Likes -->
     <form method="POST">
         <button type="submit" name="like">
             <?= $hasLiked ? '👎 Unlike' : '👍 Like' ?> (<?= $likeCount ?>)
         </button>
     </form>
 
-    <!-- Comments -->
     <h2>Comments</h2>
     <?php foreach ($comments as $comment): ?>
-        <p><strong><?= $comment['commenter'] ?>:</strong> <?= $comment['comment'] ?></p>
+        <p><strong><?= $comment['commenter'] ?>:</strong> <?= $comment['content'] ?></p>
     <?php endforeach; ?>
 
     <form method="POST">
@@ -74,7 +77,6 @@ $hasLiked  = $likeModel->hasLiked($videoId, $userId);
         <button type="submit">Plaatsen</button>
     </form>
 
-    <br>
     <a href="dashboard.php">Terug naar dashboard</a>
 </body>
 </html>

@@ -40,6 +40,25 @@ class VideoModel
         ")->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function search(string $query)
+    {
+        return $this->db->query("
+            SELECT videos.*, users.email as uploader
+            FROM videos
+            JOIN users ON videos.user_id = users.id
+            WHERE videos.title LIKE :query
+            OR videos.description LIKE :query
+        ", [':query' => '%' . $query . '%'])->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function incrementViews(int $id)
+    {
+        return $this->db->query(
+            "UPDATE videos SET views = views + 1 WHERE id = :id",
+            [':id' => $id]
+        );
+    }
+
     public function insert(string $title, string $description, string $filename, int $userId)
     {
         return $this->db->query(
