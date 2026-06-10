@@ -16,19 +16,15 @@ $videoModel   = new VideoModel();
 $commentModel = new CommentModel();
 $likeModel    = new LikeModel();
 
-// View teller verhogen
 $videoModel->incrementViews($videoId);
-
 $video = $videoModel->getById($videoId);
 
-// Comment opslaan
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'])) {
     $commentModel->insert($videoId, $userId, $_POST['comment']);
     header('Location: video.php?id=' . $videoId);
     exit;
 }
 
-// Like of unlike
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['like'])) {
     if ($likeModel->hasLiked($videoId, $userId)) {
         $likeModel->delete($videoId, $userId);
@@ -43,40 +39,45 @@ $comments  = $commentModel->getByVideoId($videoId);
 $likeCount = $likeModel->countByVideoId($videoId);
 $hasLiked  = $likeModel->hasLiked($videoId, $userId);
 ?>
-
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title><?= $video['title'] ?></title>
+    <title><?= $video['title'] ?> – StreamHive</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1><?= $video['title'] ?></h1>
-    <p><?= $video['description'] ?></p>
-    <p>Views: <?= $video['views'] ?></p>
+    <nav>
+        <div class="logo">STREAM<span>HIVE</span></div>
+        <a href="dashboard.php" class="btn-outline">← Terug</a>
+    </nav>
+    <div class="video-page">
+        <video controls>
+            <source src="../../uploads/<?= $video['filename'] ?>" type="video/mp4">
+        </video>
+        <h1><?= $video['title'] ?></h1>
+        <div class="video-meta"><?= $video['views'] ?> views</div>
+        <p style="color:#F5F5F5; font-size:14px; margin-bottom:15px;"><?= $video['description'] ?></p>
 
-    <video width="640" controls>
-        <source src="../../uploads/<?= $video['filename'] ?>" type="video/mp4">
-    </video>
+        <form method="POST">
+            <button type="submit" name="like" class="like-btn <?= $hasLiked ? 'liked' : '' ?>">
+                <?= $hasLiked ? '👎 Unlike' : '👍 Like' ?> (<?= $likeCount ?>)
+            </button>
+        </form>
 
-    <br>
-
-    <form method="POST">
-        <button type="submit" name="like">
-            <?= $hasLiked ? '👎 Unlike' : '👍 Like' ?> (<?= $likeCount ?>)
-        </button>
-    </form>
-
-    <h2>Comments</h2>
-    <?php foreach ($comments as $comment): ?>
-        <p><strong><?= $comment['commenter'] ?>:</strong> <?= $comment['content'] ?></p>
-    <?php endforeach; ?>
-
-    <form method="POST">
-        <textarea name="comment" placeholder="Schrijf een comment..." required></textarea><br>
-        <button type="submit">Plaatsen</button>
-    </form>
-
-    <a href="dashboard.php">Terug naar dashboard</a>
+        <div class="comments">
+            <h2>Comments</h2>
+            <?php foreach ($comments as $comment): ?>
+                <div class="comment">
+                    <strong><?= $comment['commenter'] ?></strong>
+                    <p><?= $comment['content'] ?></p>
+                </div>
+            <?php endforeach; ?>
+            <form method="POST">
+                <textarea name="comment" placeholder="Schrijf een comment..." required></textarea><br>
+                <button type="submit" class="btn" style="margin-top:10px;">Plaatsen</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

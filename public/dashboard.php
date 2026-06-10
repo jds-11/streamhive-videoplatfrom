@@ -8,37 +8,42 @@ require_once __DIR__ . '/../app/models/VideoModel.php';
 
 requireLogin();
 
-$userModel  = new UserModel();
-$videoModel = new VideoModel();
+$userModel   = new UserModel();
+$videoModel  = new VideoModel();
 $currentUser = $userModel->getById($_SESSION['user_id']);
 $videos      = $videoModel->getAllWithUser();
 ?>
-
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>StreamHive</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Welkom <?= $currentUser['email'] ?>!</h1>
-    <p>Rol: <?= $currentUser['role'] ?></p>
-    <a href="upload.php"><button>Video uploaden</button></a>
-    <a href="logout.php">Uitloggen</a>
-
-    <form method="GET" action="search.php">
-        <input type="text" name="q" placeholder="Zoek een video...">
-        <button type="submit">Zoeken</button>
-    </form>
-
-    <h2>Videos</h2>
-    <?php foreach ($videos as $video): ?>
-        <div>
-            <h3><a href="video.php?id=<?= $video['id'] ?>"><?= $video['title'] ?></a></h3>
-            <p><?= $video['description'] ?></p>
-            <p>Geüpload door: <?= $video['uploader'] ?></p>
-            <p>Views: <?= $video['views'] ?></p>
+    <nav>
+        <div class="logo">STREAM<span>HIVE</span></div>
+        <form method="GET" action="search.php">
+            <input class="search-input" type="text" name="q" placeholder="Search videos...">
+        </form>
+        <div style="display:flex; gap:10px;">
+            <a href="upload.php" class="btn">+ Upload</a>
+            <a href="logout.php" class="btn-outline">Uitloggen</a>
         </div>
-    <?php endforeach; ?>
+    </nav>
+    <main>
+        <h2 style="margin-bottom:20px;">Recommended</h2>
+        <div class="grid">
+            <?php foreach ($videos as $video): ?>
+                <a href="video.php?id=<?= $video['id'] ?>" class="card">
+                    <div class="card-thumb">▶</div>
+                    <div class="card-body">
+                        <div class="card-title"><?= $video['title'] ?></div>
+                        <div class="card-meta"><?= $video['uploader'] ?> · <?= $video['views'] ?> views</div>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </main>
 </body>
 </html>

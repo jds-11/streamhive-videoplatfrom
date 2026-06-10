@@ -13,10 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title       = $_POST['title'];
     $description = $_POST['description'];
     $userId      = $_SESSION['user_id'];
-
-    $file      = $_FILES['video'];
-    $filename  = time() . '_' . $file['name'];
-    $uploadDir = __DIR__ . '/../../uploads/';
+    $file        = $_FILES['video'];
+    $filename    = time() . '_' . $file['name'];
+    $uploadDir   = __DIR__ . '/../../uploads/';
 
     if (move_uploaded_file($file['tmp_name'], $uploadDir . $filename)) {
         $videoModel = new VideoModel();
@@ -28,26 +27,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Video uploaden</title>
+    <title>Upload – StreamHive</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Video uploaden</h1>
-
-    <?php if ($error): ?>
-        <p style="color:red;"><?= $error ?></p>
-    <?php endif; ?>
-
-    <form method="POST" enctype="multipart/form-data">
-        <input type="text" name="title" placeholder="Titel" required><br>
-        <textarea name="description" placeholder="Beschrijving" required></textarea><br>
-        <input type="file" name="video" accept="video/*" required><br>
-        <button type="submit">Uploaden</button>
-    </form>
-    <a href="dashboard.php">Terug naar dashboard</a>
+    <nav>
+        <div class="logo">STREAM<span>HIVE</span></div>
+        <a href="dashboard.php" class="btn-outline">← Terug</a>
+    </nav>
+    <div class="upload-page">
+        <div class="upload-box">
+            <h1>Upload Video</h1>
+            <?php if ($error): ?>
+                <p class="error"><?= $error ?></p>
+            <?php endif; ?>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="upload-area">
+                    <div>☁️</div>
+                    <p>Drag & drop your video here</p>
+                    <p>or</p>
+                    <label>
+                        <span class="select-btn">Select File</span>
+                        <input type="file" name="video" accept="video/*" required>
+                    </label>
+                </div>
+                <label>Title</label>
+                <input type="text" name="title" placeholder="Enter video title" required>
+                <label>Description</label>
+                <textarea name="description" placeholder="Tell your viewers about your video..." required></textarea>
+                <button class="btn" type="submit" style="width:100%;">Upload</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

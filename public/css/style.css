@@ -1,0 +1,298 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #111111;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* NAV */
+nav {
+    background: #111111;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #222222;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.logo span {
+    color: #FF0000;
+}
+
+/* KNOPPEN */
+.btn {
+    background: #FF0000;
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid #666666;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* INPUTS */
+input,
+textarea {
+    width: 100%;
+    background: #333333;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 15px;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #666666;
+}
+
+textarea {
+    height: 80px;
+    resize: none;
+}
+
+/* AUTH BOX (login/register) */
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.box {
+    background: #222222;
+    padding: 40px;
+    border-radius: 10px;
+    width: 380px;
+}
+
+.box .logo {
+    font-size: 24px;
+    margin-bottom: 25px;
+    text-align: center;
+    display: block;
+}
+
+.error {
+    color: #FF0000;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.link {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #666666;
+}
+
+.link a {
+    color: #FF0000;
+}
+
+/* DASHBOARD */
+main {
+    padding: 30px;
+}
+
+.search-input {
+    background: #222222;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 15px;
+    color: #fff;
+    width: 250px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #222222;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+    text-decoration: none;
+    color: #fff;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.card-thumb {
+    background: #333333;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666666;
+    font-size: 40px;
+}
+
+.card-body {
+    padding: 12px;
+}
+
+.card-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.card-meta {
+    font-size: 12px;
+    color: #666666;
+}
+
+/* VIDEO PAGINA */
+.video-page {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.video-page video {
+    width: 100%;
+    border-radius: 10px;
+    background: #000;
+}
+
+.video-page h1 {
+    font-size: 20px;
+    margin: 15px 0 5px;
+}
+
+.video-meta {
+    color: #666666;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.like-btn {
+    background: #222222;
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+}
+
+.like-btn.liked {
+    background: #FF0000;
+}
+
+.comments {
+    margin-top: 30px;
+}
+
+.comments h2 {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.comment {
+    background: #222222;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.comment strong {
+    color: #FF0000;
+    font-size: 13px;
+}
+
+.comment p {
+    font-size: 14px;
+    margin-top: 4px;
+    color: #F5F5F5;
+}
+
+/* UPLOAD PAGINA */
+.upload-page {
+    display: flex;
+    justify-content: center;
+    padding: 50px 30px;
+}
+
+.upload-box {
+    background: #222222;
+    padding: 40px;
+    border-radius: 10px;
+    width: 500px;
+}
+
+.upload-box h1 {
+    font-size: 20px;
+    margin-bottom: 25px;
+}
+
+.upload-area {
+    border: 2px dashed #444444;
+    border-radius: 10px;
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #666666;
+}
+
+.upload-area input {
+    display: none;
+}
+
+.select-btn {
+    background: #333333;
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+label {
+    font-size: 13px;
+    color: #666666;
+    display: block;
+    margin-bottom: 6px;
+}

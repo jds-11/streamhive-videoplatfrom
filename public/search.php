@@ -16,34 +16,38 @@ if (isset($_GET['q']) && $_GET['q'] !== '') {
     $videos = $videoModel->search($query);
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Zoeken</title>
+    <title>Zoeken – StreamHive</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Zoeken</h1>
-
-    <form method="GET">
-        <input type="text" name="q" value="<?= $query ?>" placeholder="Zoek een video..." required>
-        <button type="submit">Zoeken</button>
-    </form>
-
-    <h2>Resultaten</h2>
-    <?php if (empty($videos)): ?>
-        <p>Geen videos gevonden.</p>
-    <?php else: ?>
-        <?php foreach ($videos as $video): ?>
-            <div>
-                <h3><a href="video.php?id=<?= $video['id'] ?>"><?= $video['title'] ?></a></h3>
-                <p><?= $video['description'] ?></p>
-                <p>Geüpload door: <?= $video['uploader'] ?></p>
+    <nav>
+        <div class="logo">STREAM<span>HIVE</span></div>
+        <form method="GET">
+            <input class="search-input" type="text" name="q" value="<?= $query ?>" placeholder="Search videos...">
+        </form>
+        <a href="dashboard.php" class="btn-outline">← Terug</a>
+    </nav>
+    <main>
+        <h2 style="margin-bottom:20px;">Resultaten voor "<?= $query ?>"</h2>
+        <?php if (empty($videos)): ?>
+            <p style="color:#666666;">Geen videos gevonden.</p>
+        <?php else: ?>
+            <div class="grid">
+                <?php foreach ($videos as $video): ?>
+                    <a href="video.php?id=<?= $video['id'] ?>" class="card">
+                        <div class="card-thumb">▶</div>
+                        <div class="card-body">
+                            <div class="card-title"><?= $video['title'] ?></div>
+                            <div class="card-meta"><?= $video['uploader'] ?> · <?= $video['views'] ?> views</div>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
             </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
-
-    <a href="dashboard.php">Terug naar dashboard</a>
+        <?php endif; ?>
+    </main>
 </body>
 </html>
