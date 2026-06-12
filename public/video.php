@@ -53,7 +53,7 @@ $hasLiked  = $likeModel->hasLiked($videoId, $userId);
     </nav>
     <div class="video-page">
         <video controls>
-            <source src="../../uploads/<?= $video['filename'] ?>" type="video/mp4">
+            <source src="uploads/<?= $video['filename'] ?>" type="video/mp4">
         </video>
         <h1><?= $video['title'] ?></h1>
         <div class="video-meta"><?= $video['views'] ?> views</div>
